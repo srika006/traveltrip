@@ -8,7 +8,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
 
@@ -56,7 +56,7 @@ function Login() {
           </label>
           <div className="relative mb-6">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -68,6 +68,15 @@ function Login() {
         )}
             
           </div>
+          <label className="flex items-center  mb-2 space-x-2 text-black-300 text-sm sm:text-base select-none">
+            <input
+              type="checkbox"
+              checked={showPassword}
+              onChange={() => setShowPassword(!showPassword)}
+              className="w-4 h-4 sm:w-5 sm:h-5"
+            />
+            <span>Show Password</span>
+          </label>
 
           <button
             type="submit"

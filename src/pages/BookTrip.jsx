@@ -135,8 +135,8 @@ export default function BookTrip() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto mt-8 px-4">
-      <div className="flex bg-gray-100 rounded-lg shadow-lg overflow-hidden min-h-96">
+    <div className="max-w-6xl mx-auto mt-10 px-4">
+      <div className="flex bg-grey-900 rounded-lg shadow-lg overflow-hidden min-h-96">
         
         <div className="w-1/4 bg-white p-6 border-r">
           <ol className="space-y-6">
@@ -175,6 +175,7 @@ export default function BookTrip() {
             
             {!confirmed && step === 0 && (
               <div className="space-y-4">
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
                   <input
