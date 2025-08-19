@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/(.*)",
+      "destination": "/"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "https://apis.ccbp.in/$1"
     }
