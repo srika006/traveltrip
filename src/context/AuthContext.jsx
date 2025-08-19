@@ -12,11 +12,14 @@ const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      const BASE_URL = import.meta.env.VITE_API_BASE || "";
+
+    const response = await fetch(`${BASE_URL}/login`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ username, password }),
+});
+
 
       const data = await response.json();
       if (response.ok) {
