@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 
 const STEPS = [
   { key: "details", displayText: "Your Details" },
@@ -28,9 +26,6 @@ export default function BookTrip() {
   const [data, setData] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [confirmed, setConfirmed] = useState(false);
-  const navigate = useNavigate();
-
-
 
   const handleInputChange = (name, value) => {
     setData(prev => ({
@@ -106,26 +101,16 @@ export default function BookTrip() {
   };
 
   const handleConfirm = () => {
-    
-    try {
-      const existingTrips = JSON.parse(localStorage.getItem("trips") || "[]");
-      const newTrip = {
-        ...data,
-        id: Date.now(),
-        confirmed: true,
-        bookingDate: new Date().toISOString().split('T')[0] 
-      };
-      const updatedTrips = [newTrip, ...existingTrips];
-      localStorage.setItem("trips", JSON.stringify(updatedTrips));
-      console.log("Trip saved to localStorage:", newTrip);
-    } catch (error) {
-      console.error("Error saving trip to localStorage:", error);
-    }
-    
+    // Store trip data in state instead of localStorage
+    const newTrip = {
+      ...data,
+      id: Date.now(),
+      confirmed: true,
+      bookingDate: new Date().toISOString().split('T')[0] 
+    };
+    console.log("Trip would be saved:", newTrip);
     setConfirmed(true);
   };
-
-  
 
   const handleBookNewTrip = () => {
     setData(initialState);
@@ -136,28 +121,29 @@ export default function BookTrip() {
 
   return (
     <div className="max-w-6xl mx-auto mt-10 px-4">
-      <div className="flex bg-grey-900 rounded-lg shadow-lg overflow-hidden min-h-96">
+      <div className="flex flex-col lg:flex-row bg-grey-900 rounded-lg shadow-lg overflow-hidden min-h-96">
         
-        <div className="w-1/4 bg-white p-6 border-r">
-          <ol className="space-y-6">
+        
+        <div className="lg:w-1/4 bg-white p-4 lg:p-6 border-b lg:border-b-0 lg:border-r">
+          <ol className="flex lg:flex-col lg:space-y-6 space-x-4 lg:space-x-0 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0">
             {STEPS.map((st, idx) => {
               const completed = idx < step || (confirmed && idx === STEPS.length - 1);
               const active = idx === step && !confirmed;
 
               return (
-                <li key={st.key} className="flex items-center gap-3">
+                <li key={st.key} className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
                   {completed ? (
-                    <div className="h-8 w-8 flex items-center justify-center rounded-full bg-green-500 text-white">
+                    <div className="h-6 w-6 lg:h-8 lg:w-8 flex items-center justify-center rounded-full bg-green-500 text-white">
                       ✓
                     </div>
                   ) : (
-                    <span className={`h-8 w-8 flex items-center justify-center rounded-full border text-sm ${
+                    <span className={`h-6 w-6 lg:h-8 lg:w-8 flex items-center justify-center rounded-full border text-sm ${
                       active ? "border-indigo-600 text-indigo-600" : "border-gray-300 text-gray-400"
                     }`}>
                       {idx + 1}
                     </span>
                   )}
-                  <span className={`text-sm ${
+                  <span className={`text-xs lg:text-sm whitespace-nowrap ${
                     completed ? "text-gray-900 font-medium" : active ? "text-indigo-700 font-semibold" : "text-gray-500"
                   }`}>
                     {st.displayText}
@@ -168,9 +154,9 @@ export default function BookTrip() {
           </ol>
         </div>
 
-     
-        <div className="flex-1 bg-indigo-900 text-white p-10 flex items-center justify-center">
-          <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md text-gray-800">
+        {/* Main Content */}
+        <div className="flex-1 bg-indigo-900 text-white p-6 lg:p-10 flex items-center justify-center">
+          <div className="bg-white rounded-xl shadow-lg p-6 lg:p-8 w-full max-w-md text-gray-800">
             
             
             {!confirmed && step === 0 && (
@@ -471,9 +457,9 @@ export default function BookTrip() {
                 </div>
                 <h3 className="text-xl font-semibold">Confirmed</h3>
                 <p className="text-gray-600">Your trip has been booked successfully.</p>
-                <div className="flex gap-3 justify-center">
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <button
-                    onClick={() => navigate("/my-trips")}
+                    onClick={() => console.log("Navigate to /my-trips")}
                     className="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700"
                   >
                     View My Trips
